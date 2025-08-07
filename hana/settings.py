@@ -27,13 +27,6 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
-
-if 'DATABASE_URL' in os.environ:
-    import dj_database_url
-    DATABASES = {
-        'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
-    }
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -59,7 +52,7 @@ CLOUDINARY_STORAGE = {
 
 # STATIC FILES
 STATIC_URL = '/static/'                        
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'your_app', 'static')]  
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'sho', 'static')]  
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') 
 
 MEDIA_URL = '/media/'
@@ -109,6 +102,13 @@ DATABASES = {
     }
 }
 
+if 'DATABASE_URL' in os.environ:
+    import dj_database_url
+    DATABASES = {
+        'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
+    }
+
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -153,6 +153,7 @@ LOGIN_REDIRECT_URL = '/'
 
 RAZORPAY_KEY_ID = 'rzp_test_iG0SjtY7Ls5zyP'
 RAZORPAY_KEY_SECRET = 'ppkv4BvBy4qcNZUsRAxTCD2E'
+
 
 
 
