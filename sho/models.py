@@ -91,7 +91,7 @@ class OrderItem(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     first_order_offer_used = models.BooleanField(default=False)
-    loyaltypoints = models.PositiveIntegerField()
+    loyaltypoints = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return f"{self.user.username}'s profile"
@@ -113,4 +113,5 @@ class WishlistItem(models.Model):
         unique_together = ('wishlist', 'product')  # prevent duplicates
 
     def __str__(self):
+
         return f"{self.product.name} in {self.wishlist.user.username}'s wishlist"
