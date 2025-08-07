@@ -80,9 +80,12 @@ STORAGES = {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
+# Use WhiteNoise’s storage backend with manifest versioning
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Use WhiteNoise’s storage backend to compress and version your files
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+# Relax strict manifest checks so missing files in CSS (e.g., admin/img/calendar-icons.svg) don’t break collectstatic
+WHITENOISE_MANIFEST_STRICT = False
+
 
 ROOT_URLCONF = 'hana.urls'
 
@@ -166,6 +169,7 @@ LOGIN_REDIRECT_URL = '/'
 
 RAZORPAY_KEY_ID = 'rzp_test_iG0SjtY7Ls5zyP'
 RAZORPAY_KEY_SECRET = 'ppkv4BvBy4qcNZUsRAxTCD2E'
+
 
 
 
