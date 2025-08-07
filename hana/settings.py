@@ -27,28 +27,12 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
-# STATIC FILES
-STATIC_URL = '/static/'                        
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'your_app', 'static')]  
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') 
-
-# Media files via Cloudinary
-CLOUDINARY_STORAGE = {
-  'CLOUD_NAME': 'dquhplgc0',
-  'API_KEY':    '382779124484698',
-  'API_SECRET': 'Rvv5MLCJFFzsFF-BUNX74MjRgwk',
-}
-
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-MEDIA_URL = '/media/'
-
 
 if 'DATABASE_URL' in os.environ:
     import dj_database_url
     DATABASES = {
         'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
     }
-
 
 # Application definition
 
@@ -63,6 +47,23 @@ INSTALLED_APPS = [
     'cloudinary_storage',
     'sho.apps.ShoConfig',
 ]
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+# Media files via Cloudinary
+CLOUDINARY_STORAGE = {
+  'CLOUD_NAME': 'dquhplgc0',
+  'API_KEY':    '382779124484698',
+  'API_SECRET': 'Rvv5MLCJFFzsFF-BUNX74MjRgwk',
+}
+
+# STATIC FILES
+STATIC_URL = '/static/'                        
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'your_app', 'static')]  
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') 
+
+MEDIA_URL = '/media/'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -152,6 +153,7 @@ LOGIN_REDIRECT_URL = '/'
 
 RAZORPAY_KEY_ID = 'rzp_test_iG0SjtY7Ls5zyP'
 RAZORPAY_KEY_SECRET = 'ppkv4BvBy4qcNZUsRAxTCD2E'
+
 
 
 
