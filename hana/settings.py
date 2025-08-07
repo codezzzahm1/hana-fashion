@@ -34,9 +34,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Media files via Cloudinary
 CLOUDINARY_STORAGE = {
-  'CLOUD_NAME': 'your_cloud_name',
-  'API_KEY':    'your_api_key',
-  'API_SECRET': 'your_api_secret',
+  'CLOUD_NAME': 'dquhplgc0',
+  'API_KEY':    '382779124484698',
+  'API_SECRET': 'Rvv5MLCJFFzsFF-BUNX74MjRgwk',
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
@@ -152,6 +152,7 @@ LOGIN_REDIRECT_URL = '/'
 
 RAZORPAY_KEY_ID = 'rzp_test_iG0SjtY7Ls5zyP'
 RAZORPAY_KEY_SECRET = 'ppkv4BvBy4qcNZUsRAxTCD2E'
+
 
 
 
