@@ -1,0 +1,399 @@
+{% extends 'sho/base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+/* ===== ELEGANT PRODUCT DETAIL ===== */
+.product-gallery-main {
+  min-height: 460px;
+  background: radial-gradient(ellipse 250px 100px at 50% 60%, #ffffff 68%, #fff 100%);
+  border-radius: 2rem;
+  box-shadow: 0 10px 40px #e83e8c16, 0 1px 3px #fff9;
+  position: relative;
+  display: flex;
+  align-items: center; justify-content: center;
+  margin-bottom: 7px;
+}
+.product-gallery-main img {
+  max-height: 405px;
+  max-width: 99%;
+  object-fit: contain;
+  border-radius: 1.8rem;
+  background: #fff;
+  box-shadow: 0 4px 36px #e83e8c28;
+}
+@media (max-width: 768px) {
+  .product-gallery-main { min-height: 260px; }
+  .product-gallery-main img { max-height: 170px; }
+}
+
+/* Carousel Buttons */
+.gallery-arrow-btn {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  box-shadow: 0 2px 10px #e83e8c15;
+  opacity: 0.96;
+  background: linear-gradient(135deg,#fff 82%,#ffe6f5 100%);
+  border: 1.5px solid #e83e8c12;
+  transition: box-shadow .2s, background .12s;
+  display: flex; align-items: center; justify-content: center;
+}
+.gallery-arrow-btn:hover {
+  background: #f9e6e9!important;
+  box-shadow: 0 2px 18px #e83e8c30;
+}
+@media (max-width: 600px) {
+  .gallery-arrow-btn { width: 34px; height:34px; font-size:1rem;}
+}
+
+/* Color Swatches */
+#colorSwatches {
+  margin-bottom: 1.7rem;
+}
+.color-swatch-btn {
+  border-radius: 30px;
+  background: #faf3f7;
+  border: 2px solid #ffe7fa;
+  color: #979393;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  transition: box-shadow .17s, border-color .16s, background .18s;
+  min-width: 60px;
+  margin-right: 10px;
+  box-shadow: 0 2px 8px #e83e8c11;
+}
+.color-swatch-btn.active,
+.color-swatch-btn:focus, 
+.color-swatch-btn:hover {
+  background: linear-gradient(90deg,#fffafa 60%,#ffeff6 100%);
+  color: #747474 !important;
+  border-color: #f5d7e5 !important;
+  box-shadow: 0 2px 12px #e83e8c33;
+}
+
+/* Product Info Card */
+.product-info-card {
+  background: linear-gradient(110deg,#fff 80%,#ffe1ef41 100%);
+  border-radius:2rem;
+  box-shadow: 0 2px 24px #ffdcf333, 0 1px 4px #fff6;
+  padding: 2.1rem 1.6rem 1.6rem 1.6rem;
+}
+@media (max-width: 767px) {
+  .product-info-card { margin-top: 22px; padding: 1.1rem 0.5rem 1rem 0.8rem; }
+}
+
+.card-title {
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing:.01em;
+  color: #b7266b;
+}
+.price-group {
+  margin-bottom: 20px;
+}
+.product-price {
+  font-size: 1.33rem;
+  color: #e83e8c;
+  font-weight: bold;
+  letter-spacing:.01em;
+}
+.product-price-original {
+  text-decoration: line-through;
+  color: #bbb; 
+  font-size: .97rem;
+}
+.discount-badge {
+  min-width: 38px; max-width: 46px;
+  display: inline-block;
+  text-align:center;
+  margin-left: 7px;
+  font-size: .99rem;
+  border-radius: 13px;
+  background: linear-gradient(90deg,#98f0a1 56%,#62da6f 100%);
+  box-shadow: 0 1px 7px #77ffb324;
+  color: #185824;
+  font-weight: 500;
+  vertical-align: middle;
+}
+
+/* Quantity Picker */
+.input-group.quantity-group input {
+  width:50px; max-width: 50px;
+  font-weight: bold;
+  font-size: 1rem;
+  border-radius:1.6rem;
+}
+.input-group.quantity-group .btn {
+  border-radius:20% !important;
+}
+
+/* Reviews */
+.review-item {
+  background: #fff9fc;
+  border-radius: 1.3rem;
+  border: 1px solid #ffe9f122;
+  margin-bottom: 8px;
+  box-shadow: 0 1px 5px #e83e8c19;
+}
+</style>
+
+<div class="container mt-4 mb-5">
+  <div class="row g-4 justify-content-center align-items-stretch">
+    <!-- Product Gallery -->
+    <div class="col-lg-6 col-md-7 col-12">
+      <!-- Elegant Color Swatches -->
+      {% if product.colors.all %}
+        <div class="d-flex justify-content-center flex-wrap" id="colorSwatches">
+          {% for color in product.colors.all %}
+            <button 
+              type="button" 
+              class="btn color-swatch-btn px-4 py-1 {% if forloop.first %}active{% endif %}" 
+              data-color="{{ color.id }}"
+              onclick="showColorGallery({{ color.id }}, {{ product.id }})">
+              {{ color.color }}
+            </button>
+          {% endfor %}
+        </div>
+      {% endif %}
+      <!-- Image Gallery -->
+      {% for color in product.colors.all %}
+        <div class="color-gallery" id="gallery-{{ color.id }}" style="{% if not forloop.first %}display:none;{% endif %}">
+          <div class="product-gallery-main">
+            <button onclick="prevImage({{ color.id }})"
+                class="btn gallery-arrow-btn position-absolute"
+                style="left: 10px; top:50%; transform:translateY(-50%);">
+              <i class="bi bi-chevron-left" style="font-size:1.65rem; color:#e83e8c;"></i>
+            </button>
+            <img 
+              id="mainImage-{{ color.id }}"
+              src="{{ color.images.first.image.url }}"
+              alt="{{ product.name }} - {{ color.color }}" 
+              data-image-urls="{% for img in color.images.all %}{% if not forloop.first %}, {% endif %}{{ img.image.url }}{% endfor %}"
+              data-index="0"
+            >
+            
+            <button onclick="nextImage({{ color.id }})"
+                class="btn gallery-arrow-btn position-absolute"
+                style="right: 10px; top:50%; transform:translateY(-50%);">
+              <i class="bi bi-chevron-right" style="font-size:1.65rem; color:#e83e8c;"></i>
+            </button>
+          </div>
+          <div class="text-center mt-2" style="color:#e83e8c; font-weight: 600;" id="counter-{{ color.id }}">
+            1 / {{ color.images.count }}
+          </div>
+        </div>
+      {% endfor %}
+      <button class="btn btn-outline-danger btn-sm" style="border-radius:40px; width: 100%;" onclick="addToWishlist({{ product.id }})" >
+              <i class="bi bi-heart"></i>&nbsp;Add to Wishlist
+      </button>
+    </div>
+
+    <!-- Product Info & Action -->
+    <div class="col-lg-5 col-md-5 col-12">
+      <div class="product-info-card">
+        <h4 class="card-title mb-3">{{ product.name }}</h4>
+        <div class="price-group mb-3">
+          {% if product.discount > 0 %}
+            <span class="product-price-original">₹{{ product.original_price|floatformat:2 }}</span>
+            <span class="product-price ms-3">₹{{ product.price }}</span>
+            <span class="discount-badge align-middle ms-2">
+              -{{ product.discount }}%
+            </span>
+          {% else %}
+            <span class="product-price">₹{{ product.price }}</span>
+          {% endif %}
+        </div>
+        <form class="row gx-2 gy-2 align-items-center" method="post" action="{% url 'add_to_cart' product.id %}">
+          {% csrf_token %}
+          <input type="hidden" value="{{ product.colors.first.id }}" name="color_id" class="form-control"/>
+          <div class="col-auto">
+            <div class="input-group input-group-sm quantity-group">
+              <button type="button" class="btn btn-outline-secondary" id="qty-decrease">−</button>
+              <input type="text" readonly class="form-control text-center quantity-input"
+                value="0" min="0" id="qty" max="{{ product.colors.first.qty }}" name="qty"
+                style="user-select:none;">
+              <button type="button" class="btn btn-outline-secondary" id="qty-increase">+</button>
+            </div>
+          </div>
+          <div class="col-12 mt-3">
+            <button type="submit" class="btn btn-md fw-semibold w-100" id="cart-button"
+              style="background: linear-gradient(90deg, #ffb6c1, #e83e8c); color:white; border:none; box-shadow:0 2px 12px #e83e8c44; border-radius:40px;">
+              <i class="bi bi-cart3 me-2"></i> Add to Cart
+            </button>
+          </div>
+        </form>
+          
+        <div class="mt-3 fs-6 fw-semibold">
+          <span class="text-muted">Available Quantity:</span>
+          <span name="stock_qty" class="stock_qty text-dark">{{ product.colors.first.qty }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reviews section -->
+  <div class="container mt-5">
+    <h5 class="mb-3 text-secondary"><i class="bi bi-stars text-warning me-1"></i>Customer Reviews</h5>
+    {% if product.reviews.all %}
+      <div class="list-group">
+        {% for review in product.reviews.all %}
+          <div class="list-group-item review-item">
+            <div class="d-flex justify-content-between">
+              <strong>{{ review.reviewer.username }}</strong>
+              <small class="text-muted">{{ review.created_at|date:"M d, Y" }}</small>
+            </div>
+            {% if review.review_image %}
+              <img src="{{ review.review_image.url }}" alt="Review Image" style="width:60px; border-radius:10px; margin-bottom:6px; margin-top: 6px;">
+            {% endif %}
+            <p class="mb-0">{{ review.review }}</p>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="alert alert-light border mt-2">No reviews yet for this product.</div>
+    {% endif %}
+  </div>
+</div>
+
+
+<script>
+  function showColorGallery(colorId, productId) {
+    document.getElementsByClassName('color_id').value=colorId;
+    fetch(`/product_detail/${productId}/get-stock-quantity/${colorId}`,{
+      method: 'GET',
+    }
+    ).then(response => response.json())
+    .then(data => {
+      
+      if(data.success){
+        let stockQtyElements = document.getElementsByClassName('stock_qty');
+        for (let el of stockQtyElements) {
+          el.textContent = data.stock_qty;  // Or el.innerText = data.stock_qty;
+      }
+        let OrderQtyElements = document.getElementsByClassName('order-qty');
+        for (let el of OrderQtyElements) {
+          el.max = data.stock_qty;  // Or el.innerText = data.stock_qty;
+          el.value = "1"
+      }
+      }
+    })
+    
+    // Hide all galleries
+    document.querySelectorAll('.color-gallery').forEach(g => g.style.display = 'none');
+    // Show selected gallery
+    document.getElementById('gallery-' + colorId).style.display = 'block';
+
+    // Update swatch active button
+    document.querySelectorAll('#colorSwatches button').forEach(btn => btn.classList.remove('active'));
+    const activeBtn = document.querySelector('#colorSwatches button[data-color="'+ colorId +'"]');
+    if(activeBtn) activeBtn.classList.add('active');
+  }
+
+  function nextImage(colorId) {
+    const img = document.getElementById('mainImage-' + colorId);
+    if (!img) return;
+    const urls = img.getAttribute('data-image-urls').split(',').map(u => u.trim());
+    let index = parseInt(img.getAttribute('data-index'), 10) || 0;
+    index = (index + 1) % urls.length;
+    img.src = urls[index];
+    img.setAttribute('data-index', index);
+    updateCounter(colorId, index + 1, urls.length);
+  }
+
+  function prevImage(colorId) {
+    const img = document.getElementById('mainImage-' + colorId);
+    if (!img) return;
+    const urls = img.getAttribute('data-image-urls').split(',').map(u => u.trim());
+    let index = parseInt(img.getAttribute('data-index'), 10) || 0;
+    index = (index - 1 + urls.length) % urls.length;
+    img.src = urls[index];
+    img.setAttribute('data-index', index);
+    updateCounter(colorId, index + 1, urls.length);
+  }
+
+  function updateCounter(colorId, current, total) {
+    const counter = document.getElementById('counter-' + colorId);
+    if(counter) counter.textContent = current + ' / ' + total;
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const orderQty = document.querySelector('.order-qty');
+    if (orderQty) {
+      orderQty.addEventListener('change', function() {
+        if (parseInt(this.value, 10) > parseInt(this.max, 10)) {
+          alert('Sorry! We have limited stock only for this item.');
+          this.value = this.max;
+        }
+      });
+    }
+    {% for color in product.colors.all %}
+      updateCounter({{ color.id }}, 1, {{ color.images.count }});
+    {% endfor %}
+  });
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const qtyInput = document.getElementById('qty');
+    const btnIncrease = document.getElementById('qty-increase');
+    const btnDecrease = document.getElementById('qty-decrease');
+    const cartButton = document.getElementById('cart-button');
+
+    if(qtyInput.value === "0" || qtyInput.value === "" || qtyInput.value === 0){
+      cartButton.disabled = true;
+    }else {
+      cartButton.disabled = false
+    };
+
+    btnIncrease.addEventListener('click', () => {
+        let currentValue = parseInt(qtyInput.value) || 0;
+        const max = parseInt(qtyInput.getAttribute('max')) || 0;
+        if (currentValue < max) {
+            qtyInput.value = currentValue + 1;
+        }
+        if(qtyInput.value === "0" || qtyInput.value === "" || qtyInput.value === 0){
+          cartButton.disabled = true;
+        }else {
+          cartButton.disabled = false
+        };
+
+    });
+
+    btnDecrease.addEventListener('click', () => {
+        let currentValue = parseInt(qtyInput.value) || 0;
+        const min = parseInt(qtyInput.getAttribute('min')) || 0;
+        if (currentValue > min) {
+            qtyInput.value = currentValue - 1;
+        }
+        if(qtyInput.value === "0" || qtyInput.value === "" || qtyInput.value === 0){
+          cartButton.disabled = true;
+        }else {
+          cartButton.disabled = false
+        };
+
+    });
+
+    });
+
+
+  function showWishlistPopup() {
+    var toastEl = document.getElementById('wishlistToast');
+    var toast = new bootstrap.Toast(toastEl, { delay: 3000 });
+    toast.show();
+  }
+
+  function addToWishlist(productID) {
+    console.log(productID);
+      fetch(`/product_detail/${productID}/wishlist/add/${productID}`,{
+        method: 'GET'
+      }
+    ).then(response => response.json())
+    .then(data=>{
+      if(data.success){
+        showWishlistPopup();
+      }
+    })
+    }
+
+
+</script>
+
+{% endblock %}
