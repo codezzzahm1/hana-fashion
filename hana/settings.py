@@ -42,14 +42,6 @@ INSTALLED_APPS = [
 ]
 
 
-# Media files via Cloudinary
-CLOUDINARY_STORAGE = {
-  'CLOUD_NAME': 'dquhplgc0',
-  'API_KEY':    '544936698422115',
-  'API_SECRET': 'Uvq4RvZ6TQaXF8Wa2P-p2BphQvA',
-}
-
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -62,15 +54,6 @@ MIDDLEWARE = [
 ]
 
 
-STORAGES = {
-    "default": {
-        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
-    },
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
-    },
-}
-
 # Use WhiteNoise’s non-manifest storage to avoid missing-file errors
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
@@ -80,7 +63,6 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'sho', 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') 
 
 MEDIA_URL = '/media/'
-
 
 ROOT_URLCONF = 'hana.urls'
 
@@ -156,14 +138,15 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#MEDIA_URL = '/media/'
-#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGIN_REDIRECT_URL = '/'
 
 
 RAZORPAY_KEY_ID = 'rzp_test_iG0SjtY7Ls5zyP'
 RAZORPAY_KEY_SECRET = 'ppkv4BvBy4qcNZUsRAxTCD2E'
+
 
 
 
