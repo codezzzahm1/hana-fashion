@@ -82,7 +82,7 @@ STORAGES = {
 }
 
 # Use WhiteNoise’s storage backend to compress and version your files
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 ROOT_URLCONF = 'hana.urls'
 
@@ -166,6 +166,7 @@ LOGIN_REDIRECT_URL = '/'
 
 RAZORPAY_KEY_ID = 'rzp_test_iG0SjtY7Ls5zyP'
 RAZORPAY_KEY_SECRET = 'ppkv4BvBy4qcNZUsRAxTCD2E'
+
 
 
 
