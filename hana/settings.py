@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'sho.apps.ShoConfig'
+    'sho.apps.ShoConfig',
+    'django.contrib.staticfiles',
 ]
 
 MIDDLEWARE = [
@@ -121,9 +122,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = '/static/'
-STATICFILES_DIR = [os.path.join(BASE_DIR, 'static')]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'sho', 'static'),
+]
+
+# Tell Django where to collect all static into one folder
+# Render will serve files from here via WhiteNoise
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Use WhiteNoise’s storage backend to compress and version your files
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -137,4 +146,5 @@ LOGIN_REDIRECT_URL = '/'
 
 RAZORPAY_KEY_ID = 'rzp_test_iG0SjtY7Ls5zyP'
 RAZORPAY_KEY_SECRET = 'ppkv4BvBy4qcNZUsRAxTCD2E'
+
 
