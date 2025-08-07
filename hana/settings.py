@@ -70,21 +70,17 @@ MIDDLEWARE = [
 ]
 
 
-
-
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
     },
 }
-# Use WhiteNoise’s storage backend with manifest versioning
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Relax strict manifest checks so missing files in CSS (e.g., admin/img/calendar-icons.svg) don’t break collectstatic
-WHITENOISE_MANIFEST_STRICT = False
+# Use WhiteNoise’s non-manifest storage to avoid missing-file errors
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 
 ROOT_URLCONF = 'hana.urls'
@@ -169,6 +165,7 @@ LOGIN_REDIRECT_URL = '/'
 
 RAZORPAY_KEY_ID = 'rzp_test_iG0SjtY7Ls5zyP'
 RAZORPAY_KEY_SECRET = 'ppkv4BvBy4qcNZUsRAxTCD2E'
+
 
 
 
