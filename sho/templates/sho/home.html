@@ -1,0 +1,82 @@
+{% extends 'sho/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div id="offerCarousel" class="carousel slide mb-4"
+     data-bs-ride="carousel"
+     data-bs-interval="3000"
+     data-bs-pause="false">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="/static/img/mainoffer.jpg" class="d-block" alt="mainoffer">
+      <div class="carousel-caption">
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="/static/img/offer1.jpg" class="d-block" alt="Offer 1">
+      <div class="carousel-caption">
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="/static/img/offer2.jpg" class="d-block" alt="Offer 2">
+      <div class="carousel-caption">
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="/static/img/offer3.jpg" class="d-block" alt="Offer 3">
+      <div class="carousel-caption">
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="/static/img/offer4.jpg" class="d-block" alt="Offer 4">
+      <div class="carousel-caption">
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="/static/img/offer5.jpg" class="d-block" alt="Offer 5">
+      <div class="carousel-caption">
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<div class="container mt-4">
+  <div class="row row-cols-2 row-cols-md-4 g-4">
+    {% for category in categories %}
+      <div class="col">
+        <a href="{% url 'category_products' category.id %}" >
+        <div class="card h-100 text-center shadow-sm border-0 p-0" style="min-height:220px; background:transparent;">
+          <div
+            style="
+              height:200px; width:100%;
+              background: url('{{ category.image.url }}') center center/contain no-repeat;
+              position:relative;
+            ">
+            <span style="
+                position: absolute;
+                bottom: 0px;
+                left: 0; right: 0;
+                color: #8a506d;
+                font-weight: 600;
+                font-size: 1.05rem;
+                background: white;
+                text-shadow: 0 1px 4px #fdebeb, 0 1px 6px #ffe8e8;
+                ">
+              {{ category.name }}
+            </span>
+          </div>
+        </div>
+        </a>
+      </div>
+    {% empty %}
+      <div class="col"><p>No categories available.</p></div>
+    {% endfor %}
+  </div>
+</div>
+
+
+
+
+{% endblock %}
