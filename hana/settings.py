@@ -50,14 +50,6 @@ CLOUDINARY_STORAGE = {
 }
 
 
-# STATIC FILES
-STATIC_URL = '/static/'                        
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'sho', 'static')]  
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') 
-
-MEDIA_URL = '/media/'
-
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -81,6 +73,13 @@ STORAGES = {
 
 # Use WhiteNoise’s non-manifest storage to avoid missing-file errors
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+
+# STATIC FILES
+STATIC_URL = '/static/'                        
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'sho', 'static')]  
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') 
+
+MEDIA_URL = '/media/'
 
 
 ROOT_URLCONF = 'hana.urls'
@@ -165,6 +164,7 @@ LOGIN_REDIRECT_URL = '/'
 
 RAZORPAY_KEY_ID = 'rzp_test_iG0SjtY7Ls5zyP'
 RAZORPAY_KEY_SECRET = 'ppkv4BvBy4qcNZUsRAxTCD2E'
+
 
 
 
