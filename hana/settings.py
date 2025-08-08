@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-x=2=zqq(ciwtxy^&cjs=3zs^&qm0g2c2(e5!h7947-v+j13k19'
+SECRET_KEY = '8b7e779e6c71aed193e89c3123567f8d'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -169,6 +169,7 @@ LOGIN_REDIRECT_URL = '/'
 
 RAZORPAY_KEY_ID = 'rzp_test_iG0SjtY7Ls5zyP'
 RAZORPAY_KEY_SECRET = 'ppkv4BvBy4qcNZUsRAxTCD2E'
+
 
 
 
