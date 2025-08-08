@@ -85,7 +85,7 @@ class OrderItem(models.Model):
     quantity = models.PositiveIntegerField()
 
     def __str__(self):
-        return f"Order ID: {self.order.id} - {self.product.name} ({self.color.color}) x {self.quantity} by {self.order.user.username} at {self.order.created_at.strftime("%d-%b-%y")}"
+        return f"Order ID: {self.order.id} - {self.product.name} {self.color.color} - {self.quantity} by {self.order.user.username} at {self.order.created_at.strftime('%d-%b-%y')}"
     
 
 class Profile(models.Model):
@@ -115,3 +115,4 @@ class WishlistItem(models.Model):
     def __str__(self):
 
         return f"{self.product.name} in {self.wishlist.user.username}'s wishlist"
+
