@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "change-me")
 DEBUG = os.environ.get("DEBUG", "False") == "True"
-ALLOWED_HOSTS = ["*", os.environ.get("RAILWAY_STATIC_URL", "")]
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -166,6 +166,7 @@ LOGIN_REDIRECT_URL = '/'
 
 RAZORPAY_KEY_ID = 'rzp_test_iG0SjtY7Ls5zyP'
 RAZORPAY_KEY_SECRET = 'ppkv4BvBy4qcNZUsRAxTCD2E'
+
 
 
 
