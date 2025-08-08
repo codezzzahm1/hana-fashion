@@ -19,13 +19,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '8b7e779e6c71aed193e89c3123567f8d'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
-ALLOWED_HOSTS = ['*']
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "change-me")
+DEBUG = os.environ.get("DEBUG", "False") == "True"
+ALLOWED_HOSTS = ["*", os.environ.get("RAILWAY_STATIC_URL", "")]
 
 # Application definition
 
@@ -117,13 +113,13 @@ DATABASES = {
     }
 }
 
-if 'DATABASE_URL' in os.environ:
-    import dj_database_url
-    DATABASES = {
-        'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
-    }
-
-
+DATABASES = {
+    "default": dj_database_url.config(
+        default=os.environ.get("DATABASE_URL"),
+        conn_max_age=600,
+        ssl_require=True
+    )
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -169,6 +165,7 @@ LOGIN_REDIRECT_URL = '/'
 
 RAZORPAY_KEY_ID = 'rzp_test_iG0SjtY7Ls5zyP'
 RAZORPAY_KEY_SECRET = 'ppkv4BvBy4qcNZUsRAxTCD2E'
+
 
 
 
