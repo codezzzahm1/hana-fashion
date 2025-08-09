@@ -6,6 +6,7 @@ from django.contrib.auth import login, authenticate
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
+from decimal import Decimal
 from django.conf import settings
 from .forms import SignUpForm
 from .models import *
@@ -161,7 +162,7 @@ def place_order_and_redirect_to_razorpay(request):
     total = 0
     for key, item in cart.cart.items():
         quantity = item['quantity']
-        price = float(item['price'])
+        price = Decimal(item['price'])
         total += quantity * price
         items.append(item)
 
