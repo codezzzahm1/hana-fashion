@@ -475,7 +475,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const totalPriceDivForMobile = document.querySelector(`.cart-item-total-${data.key}`);
  
         if (totalPriceCell || totalPriceDivForMobile) totalPriceCell.textContent = '₹' + data.total_price;
-totalPriceDivForMobile.textContent = '₹' + data.total_price;
+totalPriceDivForMobile.textContent = 'Total ₹' + data.total_price;
         document.querySelector('.total-sum').textContent = data.total_sum;
 
 document.querySelector('#finalTotal').textContent = data.total_sum;
