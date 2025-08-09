@@ -535,12 +535,15 @@ document.addEventListener('DOMContentLoaded', function() {
   const decrementBtn = document.getElementById('decrement-loyalty');
   const pointsDiscountSpan = document.getElementById('pointsDiscount');
   const finalTotalSpan = document.getElementById('finalTotal');
-  const originalTotal = parseFloat(document.getElementById('originalTotal').textContent) || 0;
+  
   const maxPoints = parseInt(input.getAttribute('max'), 10) || 0;
   const minPoints = parseInt(input.getAttribute('min'), 10) || 0;
 
   // Function to update UI
   function updateTotalWithRedeem() {
+
+    let originalTotal = parseFloat(document.getElementById('originalTotal').textContent) || 0;
+
     let redeemPoints = parseInt(input.value) || 0;
     // Clamp value (shouldn't be necessary, but for safety)
     redeemPoints = Math.min(Math.max(redeemPoints, minPoints), maxPoints);
