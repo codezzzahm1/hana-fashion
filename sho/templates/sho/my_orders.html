@@ -48,6 +48,81 @@
     transform: scale(1.05);
     border-color: #3390ff;
   }
+
+/* ===== MOBILE FRIENDLY MY ORDERS PAGE ===== */
+@media (max-width: 576px) {
+  
+  /* Loyalty points box full-width on mobile */
+  .loyalty-points-box {
+    width: 100% !important;
+    min-width: auto !important;
+    padding: 10px 14px !important;
+    font-size: 0.9rem;
+  }
+  .loyalty-points-box i {
+    font-size: 1.2rem !important;
+    margin-right: 0.6rem !important;
+  }
+  .loyalty-points-box .fs-4 {
+    font-size: 1.2rem !important;
+  }
+
+  /* Reduce padding in container */
+  .container.py-5 {
+    padding: 1rem 0.8rem !important;
+  }
+
+  /* Order card adjustments */
+  .order-card {
+    padding: 1rem !important;
+    border-radius: 0.8rem !important;
+  }
+  .order-card h6 {
+    font-size: 0.95rem !important;
+  }
+  .order-card small {
+    font-size: 0.8rem !important;
+  }
+
+  /* Badge smaller */
+  .status-badge {
+    font-size: 0.72rem !important;
+    padding: 0.3em 0.75em !important;
+  }
+
+  /* Shipping address text smaller */
+  .order-card p {
+    font-size: 0.85rem !important;
+  }
+
+  /* List group items stack + smaller padding */
+  .list-group-item {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    padding: 0.6rem 0.75rem !important;
+    gap: 0.4rem;
+  }
+  .list-group-item .fw-semibold.fs-5 {
+    font-size: 1rem !important;
+    align-self: flex-end;
+  }
+
+  /* Product image */
+  .item-img {
+    width: 48px !important;
+    height: 48px !important;
+    margin-right: 0.6rem !important;
+  }
+
+  /* Total price text smaller */
+  .order-card h5 {
+    font-size: 1.1rem !important;
+  }
+}
+
+
+
+
 </style>
 
 <div class="container py-5">
