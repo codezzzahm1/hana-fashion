@@ -210,7 +210,7 @@ def place_order_and_redirect_to_razorpay(request):
         redeemed_points=redeem_points
     )
 
-    amount_paise = int(total * 100)  # Razorpay expects amounts in paise
+    amount_paise = total * 100  # Razorpay expects amounts in paise
 
     # 2. Create order in Razorpay
     client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
