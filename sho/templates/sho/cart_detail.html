@@ -459,7 +459,7 @@
   <div class="modal-dialog modal-xl modal-elegant-pink">
     <form method="post" action="{% url 'place_order' %}">
       {% csrf_token %}
-      <input type="hidden" value="" class="form-control" id="redeem_points_in_modal" name="redeem_points_in_modal">
+      <input type="hidden" value="0" class="form-control" id="redeem_points_in_modal" name="redeem_points_in_modal">
       <div class="modal-content border-0 shadow-lg p-2 bg-glass">
         <div class="modal-header border-0">
           <h3 class="modal-title fw-bold text-dark-pink" id="checkoutModalLabel" style="letter-spacing:.03em;">
