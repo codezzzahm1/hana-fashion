@@ -472,9 +472,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Update total price cell
         const totalPriceCell = document.querySelector(`td.total-price[data-key="${data.key}"]`);
-        const totalPriceDivForMobile = document.querySelector(`.total_price-${data.key}`);
+        const totalPriceDivForMobile = document.querySelector(`.cart-item-total-${data.key}`);
  
-        if (totalPriceCell) totalPriceCell.textContent = '₹' + data.total_price;
+        if (totalPriceCell || totalPriceDivForMobile) totalPriceCell.textContent = '₹' + data.total_price;
 totalPriceDivForMobile.textContent = '₹' + data.total_price;
         document.querySelector('.total-sum').textContent = data.total_sum;
 
