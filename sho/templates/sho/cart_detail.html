@@ -160,7 +160,7 @@
             </button>
           </div>
         </div>
-        <div class="cart-item-total mt-1 total_price-{{item.color_id}}">Total: ₹{{ item.total|floatformat:0 }}</div>
+        <div class="cart-item-total-{{ item.color_id }} mt-1">Total: ₹{{ item.total|floatformat:0 }}</div>
       </div>
       <div class="cart-item-actions">
         <a href="{% url 'remove_from_cart' item.color_id %}" class="text-danger fs-5" title="Remove Item">
