@@ -1,5 +1,84 @@
 {% extends 'sho/base.html' %}
 {% block content %}
+
+<style>
+  /* Responsive adjustments for Cart Page */
+  @media (max-width: 600px) {
+    .container {
+      padding-left: 0.7rem !important;
+      padding-right: 0.7rem !important;
+    }
+    .table-responsive {
+      border-radius: 0.7rem;
+      /* Enable easier scrolling on mobile */
+      overflow-x: auto;
+    }
+    .table thead th,
+    .table td {
+      font-size: 0.93rem; /* Slightly smaller text */
+      padding: 0.5rem 0.4rem !important;
+      white-space: nowrap;
+    }
+    .card, .alert, .modal-content, .alert-info {
+      max-width: 100% !important;
+    }
+    .card.px-4 {
+      padding-left: 0.5rem !important;
+      padding-right: 0.5rem !important;
+    }
+    .card.py-3 {
+      padding-top: 0.75rem !important;
+      padding-bottom: 0.75rem !important;
+    }
+    /* Loyalty points section: stack on smaller screens */
+    .row.align-items-center {
+      flex-direction: column !important;
+    }
+    .row.align-items-center > div {
+      width: 100% !important;
+      margin-bottom: 1rem;
+    }
+    .alert-info {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      padding: 0.7rem !important;
+    }
+    .input-group.input-group-sm {
+      max-width: 100% !important;
+    }
+    .input-group .form-control {
+      font-size: 1rem !important;
+      height: 40px !important;
+    }
+    .btn-outline-secondary, .btn-success, .btn-gradient {
+      font-size: 1.03rem;
+      height: 40px !important;
+    }
+    /* Make modal full screen on mobile for easier input */
+    .modal-dialog.modal-xl {
+      max-width: 100vw !important;
+      margin: 0 !important;
+    }
+    .modal-content.bg-glass {
+      border-radius: 0.8rem !important;
+      padding: 0.7em !important;
+    }
+
+    /* Hide extra icons or reduce their size if needed */
+    .bi.fs-4, .bi.fs-5, .bi.fs-1 {
+      font-size: 1.3em !important;
+    }
+    /* Hide Product Color name if tight for space */
+    td .text-muted {
+      display: none;
+    }
+  }
+</style>
+
+
+
 <div class="container mt-5">
   <h3 class="mb-4 fw-semibold">Your Cart</h3>
 
