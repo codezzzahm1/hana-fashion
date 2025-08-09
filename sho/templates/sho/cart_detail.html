@@ -126,6 +126,65 @@
 .cart-item-total {
   font-weight: 600;
 }
+
+
+/* Default for desktop */
+.loyalty-card {
+  max-width: 320px;
+  margin-left: auto;
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+
+  /* Card fills width and has less padding */
+  .loyalty-card {
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    padding: 0.7rem 0.8rem !important;
+    align-items: stretch !important;
+  }
+
+  /* Reduce font sizes */
+  .loyalty-card .fs-6 {
+    font-size: 0.9rem !important;
+  }
+  .loyalty-card .fs-5 {
+    font-size: 1rem !important;
+  }
+  .loyalty-card .fw-semibold {
+    font-weight: 500 !important;
+  }
+
+  /* Reduce icon size */
+  .loyalty-card i.fs-4 {
+    font-size: 1.2rem !important;
+  }
+
+  /* Input group responsive */
+  .loyalty-card .input-group {
+    max-width: 100% !important;
+  }
+  .loyalty-card .form-control {
+    font-size: 0.95rem !important;
+    height: 34px !important;
+    width: 45px !important;
+  }
+  .loyalty-card .btn-outline-secondary {
+    height: 34px !important;
+    width: 34px !important;
+    padding: 0 !important;
+    font-size: 0.9rem !important;
+  }
+
+  /* Help text smaller */
+  .loyalty-card small {
+    font-size: 0.75rem !important;
+    max-width: 100% !important;
+  }
+}
+
+
 </style>
 
 
@@ -277,7 +336,7 @@
 
           <!-- Loyalty Points Redeem -->
           <div class="col-12 col-md-6">
-            <div class="alert alert-info d-flex flex-column align-items-end px-3 py-2 rounded shadow-sm" style="max-width: 320px; margin-left:auto;">
+            <div class="alert alert-info d-flex flex-column align-items-end px-3 py-2 rounded shadow-sm loyalty-card" style="max-width: 320px; margin-left:auto;">
               <div class="d-flex justify-content-between align-items-center w-100 mb-3">
                 <div class="d-flex align-items-center">
                   <i class="bi bi-wallet2 fs-4 me-2 text-info"></i>
