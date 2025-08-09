@@ -162,7 +162,7 @@ def place_order_and_redirect_to_razorpay(request):
     for key, item in cart.cart.items():
         quantity = item['quantity']
         price = item['price']
-        total += quantity * price
+        total += item['total']
         items.append(item)
 
     address = request.POST.get('address')
@@ -205,7 +205,7 @@ def place_order_and_redirect_to_razorpay(request):
         redeemed_points=redeem_points
     )
 
-    amount_paise = int(total) * 100  # Razorpay expects amounts in paise
+    amount_paise = int(total * 100)  # Razorpay expects amounts in paise
 
     # 2. Create order in Razorpay
     client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
