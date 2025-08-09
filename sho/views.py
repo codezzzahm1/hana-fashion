@@ -162,7 +162,7 @@ def place_order_and_redirect_to_razorpay(request):
     total = 0
     for key, item in cart.cart.items():
         quantity = item['quantity']
-        price = Decimal(item['price'])
+        price = item['price']
         total += quantity * price
         items.append(item)
 
