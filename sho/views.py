@@ -179,10 +179,10 @@ def place_order_and_redirect_to_razorpay(request):
         vip_user = False
 
     if not request.user.profile.first_order_offer_used:
-        discount = int(total * 0.05)
+        discount = (total * 5)/100
         total -= discount
     else:
-        discount = int(total * 0.1)
+        discount = (total * 10)/100
         total -= discount        
 
     redeem_points = int(request.POST.get('redeem_points_in_modal', '0'))
