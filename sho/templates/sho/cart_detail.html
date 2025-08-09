@@ -78,12 +78,108 @@
 </style>
 
 
+<style>
+/* Hide the card list on desktop, show only on mobile */
+@media (min-width: 601px) {
+  .cart-list-mobile { display: none; }
+}
+/* Hide the table on mobile, show the card layout */
+@media (max-width: 600px) {
+  .cart-table-desktop { display: none; }
+  .cart-list-mobile { display: block; }
+}
+.cart-item-card {
+  background: #fff;
+  box-shadow: 0 1px 6px #e3e1eb80;
+  border-radius: 0.8rem;
+  margin-bottom: 1rem;
+  padding: 0.85rem 1rem;
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+}
+.cart-item-img {
+  width: 64px; height: 64px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.5px 2px #e3e1eb;
+}
+.cart-item-details {
+  flex: 1;
+  min-width: 0;
+}
+.cart-item-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-end;
+}
+.cart-item-title {
+  font-weight: 600;
+  font-size: 1.07rem;
+}
+.cart-item-subtext {
+  font-size: 0.92rem;
+  color: #888;
+}
+.cart-item-price,
+.cart-item-total {
+  font-weight: 600;
+}
+</style>
+
+
 
 <div class="container mt-5">
   <h3 class="mb-4 fw-semibold">Your Cart</h3>
 
   {% if cart_items %}
-    <div class="table-responsive shadow-sm rounded">
+   
+    <div class="cart-list-mobile" style="margin-bottom:2rem;">
+  {% for item in cart_items %}
+    <div class="cart-item-card">
+      {% if item.image %}
+        <img src="{{ item.image }}" alt="{{ item.name }}" class="cart-item-img">
+      {% endif %}
+      <div class="cart-item-details">
+        <div class="cart-item-title">{{ item.name }}</div>
+        {% if item.color_name %}
+          <div class="cart-item-subtext">Color: {{ item.color_name }}</div>
+        {% endif %}
+        <div class="cart-item-price">Price: ₹{{ item.price }}</div>
+        <div>
+          <span class="cart-item-subtext">Qty:</span>
+          <div class="input-group input-group-sm" style="width:120px;display:inline-flex;">
+            <button type="button" class="btn btn-outline-secondary decrement-btn" data-key="{{ item.color_id }}">
+              <i class="bi bi-dash-lg"></i>
+            </button>
+            <input type="text" readonly class="form-control text-center quantity-input"
+                   value="{{ item.quantity }}" data-key="{{ item.color_id }}" style="user-select:none;">
+            <button type="button" class="btn btn-outline-secondary increment-btn" data-key="{{ item.color_id }}">
+              <i class="bi bi-plus-lg"></i>
+            </button>
+          </div>
+        </div>
+        <div class="cart-item-total mt-1">Total: ₹{{ item.total|floatformat:0 }}</div>
+      </div>
+      <div class="cart-item-actions">
+        <a href="{% url 'remove_from_cart' item.color_id %}" class="text-danger fs-5" title="Remove Item">
+          <i class="bi bi-trash"></i>
+        </a>
+      </div>
+    </div>
+  {% empty %}
+    <div class="alert alert-warning text-center rounded-3 shadow-sm mt-5">
+      Your cart is empty.
+    </div>
+  {% endfor %}
+</div>
+
+
+
+
+
+    <div class="table-responsive shadow-sm rounded cart-table-desktop">
       <table class="table align-middle table-hover mb-0">
         <thead class="table-light text-uppercase small text-muted">
           <tr>
