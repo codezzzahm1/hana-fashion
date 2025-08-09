@@ -135,6 +135,102 @@
   margin-bottom: 8px;
   box-shadow: 0 1px 5px #e83e8c19;
 }
+
+/* ===== MOBILE FRIENDLY PRODUCT PAGE ===== */
+@media (max-width: 576px) {
+
+  /* Container padding */
+  .container {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+
+  /* Stack columns vertically */
+  .row.g-4 {
+    flex-direction: column !important;
+  }
+  .col-lg-6, .col-md-7, .col-lg-5, .col-md-5 {
+    max-width: 100% !important;
+    flex: 0 0 100% !important;
+  }
+
+  /* Gallery adjustments */
+  .product-gallery-main {
+    min-height: 220px !important;
+    padding: 0.4rem;
+    margin-bottom: 0.6rem;
+  }
+  .product-gallery-main img {
+    max-height: 180px !important;
+  }
+  .gallery-arrow-btn {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 0.9rem !important;
+  }
+
+  /* Swatches */
+  #colorSwatches {
+    margin-bottom: 1rem !important;
+    justify-content: center !important;
+  }
+  .color-swatch-btn {
+    min-width: 50px !important;
+    font-size: 0.8rem !important;
+    padding: 0.2rem 0.6rem !important;
+    margin-bottom: 0.4rem;
+  }
+
+  /* Info card spacing */
+  .product-info-card {
+    margin-top: 14px !important;
+    padding: 1rem !important;
+    border-radius: 1rem !important;
+  }
+  .card-title {
+    font-size: 1.2rem !important;
+  }
+
+  /* Price text sizes */
+  .product-price {
+    font-size: 1.1rem !important;
+  }
+  .product-price-original {
+    font-size: 0.85rem !important;
+  }
+  .discount-badge {
+    font-size: 0.8rem !important;
+    min-width: 34px !important;
+  }
+
+  /* Quantity group */
+  .quantity-group input {
+    width: 44px !important;
+    font-size: 0.9rem;
+  }
+  .quantity-group .btn {
+    font-size: 0.85rem;
+    padding: 0.25rem 0.5rem !important;
+  }
+
+  /* Wishlist button */
+  button[onclick^="addToWishlist"] {
+    font-size: 0.85rem !important;
+  }
+
+  /* Reviews section */
+  .review-item {
+    padding: 0.7rem !important;
+    font-size: 0.85rem !important;
+  }
+  .review-item img {
+    width: 50px !important;
+  }
+}
+
+
+
+
 </style>
 
 <div class="container mt-4 mb-5">
