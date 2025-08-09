@@ -6,7 +6,6 @@ from django.contrib.auth import login, authenticate
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
-from decimal import Decimal
 from django.conf import settings
 from .forms import SignUpForm
 from .models import *
