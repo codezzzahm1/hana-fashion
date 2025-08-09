@@ -1,5 +1,6 @@
 
 import razorpay
+import math
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
@@ -194,6 +195,9 @@ def place_order_and_redirect_to_razorpay(request):
     else:
         vip_user = False
     
+    
+    total = math.ceil(total)
+   
     # 1. Create your local pending Order
     order = Order.objects.create(
         user=request.user,
