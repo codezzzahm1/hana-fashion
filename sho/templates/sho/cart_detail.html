@@ -541,6 +541,62 @@
   background: linear-gradient(90deg,#fb908d,#e65eb3);
   color: #fff;
 }
+
+
+/* Mobile Responsive Styles for Checkout Modal */
+@media (max-width: 576px) {
+  /* Make modal full width & height */
+  .modal-dialog.modal-elegant-pink {
+    max-width: 100% !important;
+    margin: 0 !important;
+  }
+  .modal-content.bg-glass {
+    border-radius: 0.75rem !important;
+    padding: 0.8rem !important;
+  }
+
+  /* Stack columns vertically */
+  .modal-body .row {
+    flex-direction: column !important;
+  }
+  .modal-body .col-md-7,
+  .modal-body .col-md-5 {
+    max-width: 100% !important;
+    flex: 0 0 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* Reduce padding inside card on mobile */
+  .modal-body .bg-white {
+    padding: 1rem !important;
+  }
+
+  /* Adjust text sizes slightly */
+  .modal-title {
+    font-size: 1.2rem !important;
+  }
+  .modal-body label {
+    font-size: 0.9rem !important;
+  }
+  .modal-body .fs-6 {
+    font-size: 0.88rem !important;
+  }
+  .modal-body .fs-1 {
+    font-size: 2rem !important;
+  }
+
+  /* Make buttons full width for mobile comfort */
+  .modal-footer {
+    flex-direction: column !important;
+    gap: 0.6rem;
+  }
+  .modal-footer .btn {
+    width: 100%;
+  }
+}
+
+
 </style>
 
 
