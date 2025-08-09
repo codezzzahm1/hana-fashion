@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 class Cart:
     def __init__(self, request):
         self.session = request.session
@@ -16,7 +18,7 @@ class Cart:
                 'color_id': color_id,
                 'name': product.name,
                 'color_name': product.colors.get(id=color_id).color,
-                'price': float(product.price),  # Use discounted price if any
+                'price': Decimal(product.price),  # Use discounted price if any
                 'quantity': quantity,
                 'image': product.colors.get(id=color_id).images.first().image.url if product.colors.get(id=color_id).images.exists() else '',
                 'total': float(product.price) * quantity
