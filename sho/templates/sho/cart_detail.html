@@ -478,7 +478,7 @@ document.addEventListener('DOMContentLoaded', function() {
 document.querySelector('#finalTotal').textContent = data.total_sum;
         document.querySelector('.ajax-discount').textContent = '₹' + data.ajax_discount;
 
-updateTotalWithRedeem();
+document.getElementById('redeem_points').value = "0";
 
       } else {
         alert(data.error);
