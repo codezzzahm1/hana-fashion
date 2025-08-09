@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from decimal import Decimal, ROUND_HALF_UP
 
 class Category(models.Model):
     name = models.CharField(max_length=30)
@@ -16,11 +17,27 @@ class Product(models.Model):
     discount = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
-        self.price = self.price - ((self.price/100) * self.discount)
+        price_decimal = Decimal(self.price)
+        # Calculate discount amount exactly
+        discount_amount = (price_decimal * Decimal(self.discount) / Decimal("100"))
+        # Subtract and round to 2 decimal places using HALF_UP (bankers rounding)
+        final_price = (price_decimal - discount_amount).quantize(
+            Decimal("0.01"),
+            rounding=ROUND_HALF_UP
+        )
+        self.price = final_price
+        # super().save(*args, **kwargs)
+        # self.price = self.price - ((self.price/100) * self.discount)
         return super().save(*args, **kwargs)
     
     def original_price(self):
-        return self.price + ((self.price/100) * self.discount)
+        if self.discount:
+            return (self.price / (Decimal("1") - (Decimal(self.discount) / Decimal("100")))).quantize(
+                Decimal("0.01"),
+                rounding=ROUND_HALF_UP,
+            )
+        return self.price
+        # return self.price + ((self.price/100) * self.discount)
 
 
     def __str__(self):
