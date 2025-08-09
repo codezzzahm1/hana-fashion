@@ -179,10 +179,10 @@ def place_order_and_redirect_to_razorpay(request):
         vip_user = False
 
     if not request.user.profile.first_order_offer_used:
-        discount = (total * 5)/100
+        discount = total * (5/100)
         total -= discount
     else:
-        discount = (total * 10)/100
+        discount = total * (10/100)
         total -= discount        
 
     redeem_points = int(request.POST.get('redeem_points_in_modal', '0'))
@@ -205,7 +205,7 @@ def place_order_and_redirect_to_razorpay(request):
         redeemed_points=redeem_points
     )
 
-    amount_paise = int(total * 100)  # Razorpay expects amounts in paise
+    amount_paise = int(total) * 100  # Razorpay expects amounts in paise
 
     # 2. Create order in Razorpay
     client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
