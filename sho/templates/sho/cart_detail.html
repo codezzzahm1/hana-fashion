@@ -474,6 +474,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const totalPriceCell = document.querySelector(`td.total-price[data-key="${data.key}"]`);
         if (totalPriceCell) totalPriceCell.textContent = '₹' + data.total_price;
         document.querySelector('.total-sum').textContent = data.total_sum;
+
+document.querySelector('#finalTotal').textContent = data.total_sum;
         document.querySelector('.ajax-discount').textContent = '₹' + data.ajax_discount;
       } else {
         alert(data.error);
