@@ -169,15 +169,6 @@ def place_order_and_redirect_to_razorpay(request):
     phone = request.POST.get('phone')
     pincode = request.POST.get('pincode')
 
-    deliverycharge = 60 if int(pincode) > 600000 and int(pincode) < 699999 else 90
-    total += deliverycharge
-
-    if has_ordered_ten_times(request.user):
-        vip_user = True
-        total -= deliverycharge
-    else:
-        vip_user = False
-
     if not request.user.profile.first_order_offer_used:
         discount = total * (5/100)
         total -= discount
@@ -192,6 +183,16 @@ def place_order_and_redirect_to_razorpay(request):
 
     if not address or not phone:
         return redirect('cart_detail')
+
+    deliverycharge = 60 if int(pincode) > 600000 and int(pincode) < 699999 else 90
+
+    total += deliverycharge
+
+    if has_ordered_ten_times(request.user):
+        vip_user = True
+        total -= deliverycharge
+    else:
+        vip_user = False
     
     # 1. Create your local pending Order
     order = Order.objects.create(
