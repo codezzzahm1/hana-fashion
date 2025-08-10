@@ -301,7 +301,7 @@
         </div>
         <form class="row gx-2 gy-2 align-items-center" method="post" action="{% url 'add_to_cart' product.id %}">
           {% csrf_token %}
-          <input type="hidden" value="{{ product.colors.first.id }}" name="color_id" class="form-control"/>
+          <input type="hidden" value="{{ product.colors.first.id }}" name="color_id" class="form-control color_id_hidden"/>
           <div class="col-auto">
             <div class="input-group input-group-sm quantity-group">
               <button type="button" class="btn btn-outline-secondary" id="qty-decrease">−</button>
@@ -383,6 +383,7 @@
     document.querySelectorAll('#colorSwatches button').forEach(btn => btn.classList.remove('active'));
     const activeBtn = document.querySelector('#colorSwatches button[data-color="'+ colorId +'"]');
     if(activeBtn) activeBtn.classList.add('active');
+document.querySelector('.color_id_hidden').value=colorId;
   }
 
   function nextImage(colorId) {
