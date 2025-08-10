@@ -228,6 +228,30 @@
   }
 }
 
+@media (max-width: 576px) {
+  /* Make gallery area taller for mobile */
+  .product-gallery-main {
+    min-height: 380px !important;
+    padding: 0 !important;
+  }
+
+  /* Main product image: full width & bigger */
+  .product-gallery-main img {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: none !important; /* remove previous height limit */
+    object-fit: contain !important;
+  }
+
+  /* Adjust arrow buttons over larger image */
+  .gallery-arrow-btn {
+    background: rgba(255,255,255,0.85);
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 1.2rem !important;
+  }
+}
 
 
 
