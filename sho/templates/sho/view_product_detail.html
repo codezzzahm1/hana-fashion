@@ -261,20 +261,7 @@
   <div class="row g-4 justify-content-center align-items-stretch">
     <!-- Product Gallery -->
     <div class="col-lg-6 col-md-7 col-12">
-      <!-- Elegant Color Swatches -->
-      {% if product.colors.all %}
-        <div class="d-flex justify-content-center flex-wrap" id="colorSwatches">
-          {% for color in product.colors.all %}
-            <button 
-              type="button" 
-              class="btn color-swatch-btn px-4 py-1 {% if forloop.first %}active{% endif %}" 
-              data-color="{{ color.id }}"
-              onclick="showColorGallery({{ color.id }}, {{ product.id }})">
-              {{ color.color }}
-            </button>
-          {% endfor %}
-        </div>
-      {% endif %}
+      
       <!-- Image Gallery -->
       {% for color in product.colors.all %}
         <div class="color-gallery" id="gallery-{{ color.id }}" style="{% if not forloop.first %}display:none;{% endif %}">
@@ -303,6 +290,22 @@
           </div>
         </div>
       {% endfor %}
+
+        <!-- Elegant Color Swatches -->
+      {% if product.colors.all %}
+        <div class="d-flex justify-content-center flex-wrap" id="colorSwatches">
+          {% for color in product.colors.all %}
+            <button 
+              type="button" 
+              class="btn color-swatch-btn px-4 py-1 {% if forloop.first %}active{% endif %}" 
+              data-color="{{ color.id }}"
+              onclick="showColorGallery({{ color.id }}, {{ product.id }})">
+              {{ color.color }}
+            </button>
+          {% endfor %}
+        </div>
+      {% endif %}
+
       <button class="btn btn-outline-danger btn-sm" style="border-radius:40px; width: 100%;" onclick="addToWishlist({{ product.id }})" >
               <i class="bi bi-heart"></i>&nbsp;Add to Wishlist
       </button>
