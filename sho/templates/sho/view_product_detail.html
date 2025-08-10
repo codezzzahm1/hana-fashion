@@ -525,11 +525,16 @@ document.querySelector('.color_id_hidden').value=colorId;
   // Find the next button (right arrow) inside the same gallery container
   const nextBtn = img.parentElement.querySelector('.gallery-arrow-btn.position-absolute[style*="right:"]');
 
+const prevBtn = img.parentElement.querySelector('.gallery-arrow-btn.position-absolute[style*="left:"]');
+
   // Show the next button only if more than one image exists
   if (urls.length > 1) {
     nextBtn.style.display = 'flex';
+    prevBtn.style.display = 'flex';
+    
   } else {
     nextBtn.style.display = 'none';
+    prevBtn.style.display = 'none';
   }
 }
 
