@@ -46,7 +46,7 @@ class Product(models.Model):
 
 class ProductColor(models.Model):
     product = models.ForeignKey(to=Product, related_name='colors', on_delete=models.CASCADE)
-    color = models.CharField(max_length=30)
+    color = models.CharField(max_length=30, blank=True, null=True)
     qty = models.IntegerField(default=0)
 
     def __str__(self):
