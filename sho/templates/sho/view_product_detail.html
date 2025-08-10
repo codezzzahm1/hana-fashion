@@ -253,6 +253,36 @@
   }
 }
 
+/* Move wishlist button to top-right of product image */
+.product-gallery-main {
+  position: relative; /* make it the positioning container */
+}
+
+.wishlist-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 5;
+  border-radius: 50px !important;
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+/* Make icon and text fit nicely */
+.wishlist-btn i {
+  color: #e83e8c;
+}
+
+/* Mobile tweak — smaller button */
+@media (max-width: 576px) {
+  .wishlist-btn {
+    padding: 4px 10px;
+    font-size: 0.85rem;
+    top: 8px;
+    right: 8px;
+  }
+}
 
 
 </style>
@@ -284,6 +314,9 @@
                 style="right: 10px; top:50%; transform:translateY(-50%);">
               <i class="bi bi-chevron-right" style="font-size:1.65rem; color:#e83e8c;"></i>
             </button>
+            <button class="btn btn-outline-danger btn-sm wishlist-btn" style="border-radius:40px; width: 100%;" onclick="addToWishlist({{ product.id }})" >
+              <i class="bi bi-heart"></i>
+      </button>
           </div>
           <div class="text-center mt-2" style="color:#e83e8c; font-weight: 600;" id="counter-{{ color.id }}">
             1 / {{ color.images.count }}
@@ -305,10 +338,6 @@
           {% endfor %}
         </div>
       {% endif %}
-
-      <button class="btn btn-outline-danger btn-sm" style="border-radius:40px; width: 100%;" onclick="addToWishlist({{ product.id }})" >
-              <i class="bi bi-heart"></i>&nbsp;Add to Wishlist
-      </button>
     </div>
 
     <!-- Product Info & Action -->
