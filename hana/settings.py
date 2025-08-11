@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'boto3',
+    'nested_admin'
 ]
 
 INSTALLED_APPS += ['storages']
