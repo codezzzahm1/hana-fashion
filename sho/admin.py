@@ -1,44 +1,25 @@
 from django.contrib import admin
 from django.utils.html import format_html, mark_safe
 import nested_admin
-from .models import Category, Product, ProductColor, ProductImage, ProductReview, Order, OrderItem, Profile
+from .models import (
+    Category, Product, ProductColor, ProductImage, ProductReview,
+    Order, OrderItem, Profile, Wishlist, WishlistItem
+)
 
+# --- CATEGORY ADMIN ---
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ['name']
 
-admin.site.register(Category)
-
-
-# --- NESTED INLINES FOR PRODUCT ---
+# --- NESTED INLINES ---
 class ProductImageNestedInline(nested_admin.NestedTabularInline):
     model = ProductImage
     extra = 1
-    readonly_fields = ['thumbnail']
-
-    def thumbnail(self, instance):
-        if instance.image:
-            return format_html('<img src="{}" width="64" style="margin:1px; border-radius:8px;" />', instance.image.url)
-        return ""
-    thumbnail.short_description = "Thumbnail"
-
 
 class ProductColorNestedInline(nested_admin.NestedStackedInline):
     model = ProductColor
     extra = 1
     inlines = [ProductImageNestedInline]
-    readonly_fields = ['all_images_for_color']
-
-    def all_images_for_color(self, instance):
-        if not instance.pk:  # Inline not yet saved
-            return ""
-        images = instance.images.all()
-        if not images:
-            return "No images"
-        html = ""
-        for img in images:
-            if img.image:
-                html += f'<img src="{img.image.url}" width="64" style="margin:1px; border-radius:8px;" />'
-        return mark_safe(html)
-    all_images_for_color.short_description = 'Images'
-
 
 class ProductReviewInline(admin.TabularInline):
     model = ProductReview
@@ -47,48 +28,50 @@ class ProductReviewInline(admin.TabularInline):
     readonly_fields = ['reviewer', 'review', 'created_at']
     can_delete = False
     show_change_link = False
-
     def has_add_permission(self, request, obj=None):
         return False
-
 
 @admin.register(Product)
 class ProductAdmin(nested_admin.NestedModelAdmin):
     inlines = [ProductColorNestedInline, ProductReviewInline]
-    list_display = ('name', 'category', 'price', 'discount')
+    list_display = ['name', 'category', 'price', 'discount']
 
-
-# --- SEPARATE ADMIN FOR REFERENCE (Optional - you can remove these if not needed) ---
+# --- PLAIN ADMIN FOR COLOR, IMAGE, REVIEW ---
+@admin.register(ProductColor)
 class ProductColorAdmin(admin.ModelAdmin):
-    list_display = ['color', 'product', 'qty']
+    list_display = ['product', 'color', 'qty']
 
+@admin.register(ProductImage)
 class ProductImageAdmin(admin.ModelAdmin):
-    list_display = ['color', 'image_thumbnail']
-    readonly_fields = ['image_thumbnail']
+    list_display = ['color']
 
-    def image_thumbnail(self, obj):
-        if obj.image:
-            return format_html('<img src="{}" width="80" />', obj.image.url)
-        return ""
-    image_thumbnail.short_description = "Thumbnail"
+@admin.register(ProductReview)
+class ProductReviewAdmin(admin.ModelAdmin):
+    list_display = ['product', 'reviewer', 'created_at']
 
-# Register them separately (don't unregister)
-admin.site.register(ProductColor, ProductColorAdmin)
-admin.site.register(ProductImage, ProductImageAdmin)
-admin.site.register(ProductReview)
-admin.site.register(Profile)
-
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ['user', 'loyaltypoints', 'first_order_offer_used']
 
 # --- ORDER ADMIN ---
 class OrderItemInline(admin.TabularInline):
     model = OrderItem
     extra = 0
-    readonly_fields = ('product', 'color', 'price', 'quantity')
-
+    readonly_fields = ['product', 'color', 'price', 'quantity']
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'created_at', 'total', 'status')
-    list_filter = ('status', 'created_at')
-    search_fields = ('user__username', 'shipping_address', 'phone')
+    list_display = ['id', 'user', 'created_at', 'total', 'status']
+    list_filter = ['status', 'created_at']
+    search_fields = ['user__username', 'shipping_address', 'phone']
     inlines = [OrderItemInline]
+
+# --- WISHLIST ---
+class WishlistItemInline(admin.TabularInline):
+    model = WishlistItem
+    extra = 0
+
+@admin.register(Wishlist)
+class WishlistAdmin(admin.ModelAdmin):
+    list_display = ['user']
+    inlines = [WishlistItemInline]
