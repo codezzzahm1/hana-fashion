@@ -14,7 +14,7 @@ class Product(models.Model):
     category = models.ForeignKey(to=Category, related_name='products', on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
     price = models.DecimalField(max_digits=10, decimal_places=0)
-    after_discount_price = models.DecimalField(max_digits=10, decimal_places=0)
+    after_discount_price = models.DecimalField(max_digits=10, decimal_places=0, blank=True, null=True)
     discount = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
