@@ -63,7 +63,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 # ================================
-# NESTED PRODUCT ADMIN (Images in same screen)
+# NESTED PRODUCT ADMIN
 # ================================
 class ProductImageNestedInline(nested_admin.NestedTabularInline):
     model = ProductImage
@@ -262,22 +262,16 @@ class ProductAdmin(nested_admin.NestedModelAdmin):
             images = color.images.all()
             color_name = color.color or 'Unnamed Color'
             
-            gallery_html += f'''
-            <div style="border: 1px solid #ddd; border-radius: 8px; padding: 10px; background: #fff;">
-                <h4 style="margin: 0 0 10px 0; color: #495057; font-size: 14px;">{color_name} ({color.qty} in stock)</h4>
-            '''
+            gallery_html += '<div style="border: 1px solid #ddd; border-radius: 8px; padding: 10px; background: #fff;">'
+            gallery_html += '<h4 style="margin: 0 0 10px 0; color: #495057; font-size: 14px;">{} ({} in stock)</h4>'.format(color_name, color.qty)
             
             if images:
                 gallery_html += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(60px, 1fr)); gap: 5px;">'
-                for img in images[:6]:  # Show max 6 images per color
+                for img in images[:6]:
                     if img.image:
-                        gallery_html += f'''
-                        <img src="{img.image.url}" 
-                             style="width: 100%; height: 60px; object-fit: cover; border-radius: 4px; border: 1px solid #ddd;" 
-                             title="Click to view full size" />
-                        '''
+                        gallery_html += '<img src="{}" style="width: 100%; height: 60px; object-fit: cover; border-radius: 4px; border: 1px solid #ddd;" title="Click to view full size" />'.format(img.image.url)
                 if len(images) > 6:
-                    gallery_html += f'<div style="background: #f8f9fa; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #666;">+{len(images) - 6} more</div>'
+                    gallery_html += '<div style="background: #f8f9fa; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #666;">+{} more</div>'.format(len(images) - 6)
                 gallery_html += '</div>'
             else:
                 gallery_html += '<div style="text-align: center; color: #999; padding: 20px; background: #f8f9fa; border-radius: 4px;">No images</div>'
@@ -290,7 +284,7 @@ class ProductAdmin(nested_admin.NestedModelAdmin):
 
 
 # ================================
-# SEPARATE COLOR ADMIN (for advanced editing)
+# SEPARATE COLOR ADMIN
 # ================================
 @admin.register(ProductColor)
 class ProductColorAdmin(nested_admin.NestedModelAdmin):
@@ -483,4 +477,7 @@ class OrderAdmin(admin.ModelAdmin):
         profile = getattr(obj.user, 'profile', None)
         loyalty_points = profile.loyaltypoints if profile else 0
         return format_html(
-            '<div style="background: #f8f
+            '<div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">'
+            '<div><strong>Full Name:</strong> {}</div>'
+            '<div><strong>Email:</strong> {}</div>'
+            '<div><strong>Usern
