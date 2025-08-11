@@ -14,21 +14,12 @@ class Product(models.Model):
     category = models.ForeignKey(to=Category, related_name='products', on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
     price = models.DecimalField(max_digits=10, decimal_places=0)
-    discounted_amount = models.DecimalField(max_digits=10, decimal_places=0)
-    discount = models.FloatField(default=0.0)
+    after_discount_price = models.DecimalField(max_digits=10, decimal_places=0)
+    discount = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
-        price_decimal = Decimal(self.price)
-        # Calculate discount amount exactly
-        discount_amount = (price_decimal * Decimal(self.discount) / Decimal("100"))
-        # Subtract and round to 2 decimal places using HALF_UP (bankers rounding)
-        final_price = (price_decimal - discount_amount).quantize(
-            Decimal("0.01"),
-            rounding=ROUND_HALF_UP
-        )
-        self.price = final_price
-        # super().save(*args, **kwargs)
-        # self.price = self.price - ((self.price/100) * self.discount)
+        self.discount = int(self.after_discount_price/self.price) * 100
+        self.price = self.after_discount_price
         return super().save(*args, **kwargs)
     
     def original_price(self):
