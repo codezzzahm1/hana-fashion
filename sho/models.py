@@ -18,8 +18,9 @@ class Product(models.Model):
     discount = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
-        self.discount = int(self.after_discount_price/self.price) * 100
-        self.price = self.after_discount_price
+        if self.after_discount_price > 0:
+            self.discount = int(self.after_discount_price/self.price) * 100
+            self.price = self.after_discount_price
         return super().save(*args, **kwargs)
     
     def original_price(self):
