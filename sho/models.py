@@ -14,13 +14,13 @@ class Product(models.Model):
     category = models.ForeignKey(to=Category, related_name='products', on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
     price = models.DecimalField(max_digits=10, decimal_places=0)
-    # after_discount_price = models.DecimalField(max_digits=10, decimal_places=0)
+    after_discount_price = models.DecimalField(max_digits=10, decimal_places=0)
     discount = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
-        # if self.after_discount_price > 0:
-            # self.discount = int((self.after_discount_price/self.price) * 100)
-            # self.price = self.after_discount_price
+        if self.after_discount_price > 0:
+            self.discount = int((self.after_discount_price/self.price) * 100)
+            self.price = self.after_discount_price
         return super().save(*args, **kwargs)
     
     def original_price(self):
