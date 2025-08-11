@@ -19,7 +19,7 @@ class Product(models.Model):
 
     def save(self, *args, **kwargs):
         if self.after_discount_price > 0:
-            self.discount = int(self.after_discount_price/self.price) * 100
+            self.discount = int((self.after_discount_price/self.price) * 100)
             self.price = self.after_discount_price
         return super().save(*args, **kwargs)
     
