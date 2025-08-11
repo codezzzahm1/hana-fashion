@@ -3,7 +3,9 @@ from django.utils.html import format_html, mark_safe
 import nested_admin
 from .models import Category, Product, ProductColor, ProductImage, ProductReview, Order, OrderItem, Profile
 
+
 admin.site.register(Category)
+
 
 # --- NESTED INLINES FOR PRODUCT ---
 class ProductImageNestedInline(nested_admin.NestedTabularInline):
@@ -17,10 +19,11 @@ class ProductImageNestedInline(nested_admin.NestedTabularInline):
         return ""
     thumbnail.short_description = "Thumbnail"
 
+
 class ProductColorNestedInline(nested_admin.NestedStackedInline):
     model = ProductColor
     extra = 1
-    inlines = [ProductImageNestedInline]  # Only here!
+    inlines = [ProductImageNestedInline]
     readonly_fields = ['all_images_for_color']
 
     def all_images_for_color(self, instance):
@@ -36,6 +39,7 @@ class ProductColorNestedInline(nested_admin.NestedStackedInline):
         return mark_safe(html)
     all_images_for_color.short_description = 'Images'
 
+
 class ProductReviewInline(admin.TabularInline):
     model = ProductReview
     extra = 0
@@ -43,31 +47,44 @@ class ProductReviewInline(admin.TabularInline):
     readonly_fields = ['reviewer', 'review', 'created_at']
     can_delete = False
     show_change_link = False
+
     def has_add_permission(self, request, obj=None):
         return False
+
 
 @admin.register(Product)
 class ProductAdmin(nested_admin.NestedModelAdmin):
     inlines = [ProductColorNestedInline, ProductReviewInline]
-    list_display = ('name', 'category')
+    list_display = ('name', 'category', 'price', 'discount')
 
-# --- PLAIN ADMIN FOR COLOR/IMAGE (NO INLINES) ---
-@admin.register(ProductColor)
+
+# --- SEPARATE ADMIN FOR REFERENCE (Optional - you can remove these if not needed) ---
 class ProductColorAdmin(admin.ModelAdmin):
-    list_display = ['color', 'product']
+    list_display = ['color', 'product', 'qty']
 
-@admin.register(ProductImage)
 class ProductImageAdmin(admin.ModelAdmin):
-    list_display = ['color', 'image']
+    list_display = ['color', 'image_thumbnail']
+    readonly_fields = ['image_thumbnail']
 
+    def image_thumbnail(self, obj):
+        if obj.image:
+            return format_html('<img src="{}" width="80" />', obj.image.url)
+        return ""
+    image_thumbnail.short_description = "Thumbnail"
+
+# Register them separately (don't unregister)
+admin.site.register(ProductColor, ProductColorAdmin)
+admin.site.register(ProductImage, ProductImageAdmin)
 admin.site.register(ProductReview)
 admin.site.register(Profile)
 
-# --- ORDER/ORDERITEM ADMIN ---
+
+# --- ORDER ADMIN ---
 class OrderItemInline(admin.TabularInline):
     model = OrderItem
     extra = 0
     readonly_fields = ('product', 'color', 'price', 'quantity')
+
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
@@ -75,14 +92,3 @@ class OrderAdmin(admin.ModelAdmin):
     list_filter = ('status', 'created_at')
     search_fields = ('user__username', 'shipping_address', 'phone')
     inlines = [OrderItemInline]
-
-
-# --- UNREGISTER UNNEEDED MODELS (if desired) ---
-try:
-    admin.site.unregister(ProductImage)
-except admin.sites.NotRegistered:
-    pass
-try:
-    admin.site.unregister(ProductColor)
-except admin.sites.NotRegistered:
-    pass
