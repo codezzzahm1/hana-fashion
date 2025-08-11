@@ -6,18 +6,18 @@ from .models import (
     Order, OrderItem, Profile, Wishlist, WishlistItem
 )
 
-# --- CATEGORY ---
 admin.site.register(Category)
 
-# --- NESTED INLINES WITH THUMBNAILS ---
+# --- NESTED INLINES WITH THUMBNAIL ---
 class ProductImageNestedInline(nested_admin.NestedTabularInline):
     model = ProductImage
     extra = 0
     readonly_fields = ['thumbnail']
-    
     def thumbnail(self, obj):
         if obj.image:
-            return format_html('<img src="{}" width="64" style="border-radius:5px;" />', obj.image.url)
+            return format_html(
+                '<img src="{}" width="64" style="border-radius:5px;" />', obj.image.url
+            )
         return ""
     thumbnail.short_description = "Preview"
 
@@ -26,12 +26,28 @@ class ProductColorNestedInline(nested_admin.NestedTabularInline):
     extra = 0
     inlines = [ProductImageNestedInline]
 
+class ProductReviewInline(admin.TabularInline):
+    model = ProductReview
+    extra = 0
+    fields = ['reviewer', 'review', 'created_at']
+    readonly_fields = ['reviewer', 'review', 'created_at']
+    can_delete = False
+    show_change_link = False
+    def has_add_permission(self, request, obj=None):
+        return False
+
 @admin.register(Product)
 class ProductAdmin(nested_admin.NestedModelAdmin):
-    inlines = [ProductColorNestedInline]
-    list_display = ['name', 'category', 'price', 'discount']
+    inlines = [ProductColorNestedInline, ProductReviewInline]
+    list_display = ['name', 'category', 'price', 'discount', 'color_count', 'image_count']
+    def color_count(self, obj):
+        return obj.colors.count()
+    color_count.short_description = "Colors"
+    def image_count(self, obj):
+        return sum(color.images.count() for color in obj.colors.all())
+    image_count.short_description = "Images"
 
-# --- SIMPLE ADMIN FOR OTHER MODELS ---
+# --- PRODUCTCOLOR ADMIN ---
 @admin.register(ProductColor)
 class ProductColorAdmin(admin.ModelAdmin):
     list_display = ['product', 'color', 'qty']
@@ -40,10 +56,11 @@ class ProductColorAdmin(admin.ModelAdmin):
 class ProductImageAdmin(admin.ModelAdmin):
     list_display = ['color', 'image_preview']
     readonly_fields = ['image_preview']
-    
     def image_preview(self, obj):
         if obj.image:
-            return format_html('<img src="{}" width="100" style="border-radius:5px;" />', obj.image.url)
+            return format_html(
+                '<img src="{}" width="100" style="border-radius:5px;" />', obj.image.url
+            )
         return ""
     image_preview.short_description = "Preview"
 
