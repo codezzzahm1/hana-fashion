@@ -249,7 +249,25 @@
       const sidebar = document.getElementById('sidebarNav');
       const sidebarBtn = document.getElementById('sidebarToggleBtn');
       const backdrop = document.getElementById('sidebarBackdrop');
+     
+      // Close sidebar when clicking outside (on mobile)
+document.addEventListener('click', function(event) {
+  const clickedInsideSidebar = sidebar.contains(event.target);
+  const clickedOnToggleBtn = sidebarBtn.contains(event.target);
 
+  // Only close for small screens AND if sidebar is visible
+  if (
+    window.innerWidth < 992 &&
+    sidebar.classList.contains('sidebar-show') &&
+    !clickedInsideSidebar &&
+    !clickedOnToggleBtn
+  ) {
+    closeSidebar();
+  }
+});
+
+
+   
       function closeSidebar() {
         sidebar.classList.remove('sidebar-show');
         backdrop.classList.add('d-none');
