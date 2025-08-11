@@ -27,6 +27,7 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    'nested_admin',
     'sho.apps.ShoConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -35,7 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'boto3',
-    'nested_admin'
+   
 ]
 
 INSTALLED_APPS += ['storages']
